@@ -5,8 +5,13 @@ def checkout() {
         git branch: "${BRANCH}", credentialsId: 'github', url: "$GITHUB_URL"
 }
 def owasp() {
-    dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+				dependencyCheck additionalArguments: ''' 
+					-o "./" 
+					-s "./"
+					-f "ALL" 
+					--prettyPrint''',
+					'dependency-check-11.1.0'
+					 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
 }
 def sonaranalysis() {
         withSonarQubeEnv('SonarQube') {
@@ -24,8 +29,8 @@ def trivyfs() {
 }
 def build() {
     sh '''
-        pip3 install --no-cache-dir -r /src/app/requirements.txt
-        pyhon3 /src/app/run.py
+        pip3 install --no-cache-dir -r/requirements.txt
+        pyhon3 run.py
     '''
 }
 

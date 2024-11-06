@@ -33,5 +33,13 @@ sudo rm -rf helm-v3.16.0-rc.1-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin
 sudo rm -rf linux-amd64
 helm version
-sudo wget https://github.com/aquasecurity/trivy/releases/download/v0.55.0/trivy_0.55.0_Linux-64bit.deb
-sudo dpkg -i trivy_0.55.0_Linux-64bit.deb
+#sudo wget https://github.com/aquasecurity/trivy/releases/download/v0.55.0/trivy_0.55.0_Linux-64bit.deb
+#sudo dpkg -i trivy_0.55.0_Linux-64bit.deb
+sudo wget https://github.com/jeremylong/DependencyCheck/releases/download/v11.1.0/dependency-check-11.1.0-release.zip
+sudo unzip dependency-check-11.1.0-release.zip
+sudo rm -rf dependency-check-11.1.0-release.zip
+sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy -y
