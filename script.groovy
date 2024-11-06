@@ -1,3 +1,6 @@
+def clean() {
+        cleanWs()
+}
 def checkout() {
         git branch: "${BRANCH}", credentialsId: 'github', url: "$GITHUB_URL"
 }
@@ -6,10 +9,13 @@ def owasp() {
     dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 }
 def sonaranalysis() {
-        withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'sonar') {
-            sh "mvn sonar:sonar"
-    }
+        withSonarQubeEnv('SonarQube') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Python-Webapp \
+                    -Dsonar.projectKey=Python-Webapp '''
+       }
 }
+
+
 def qualitygate() {
         waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
 }
@@ -65,7 +71,7 @@ def ecr() {
 }
 
 def deploy() {
-        sh '''  helm upgrade first-release --install java-maven --set image.tag=$BUILD_NUMBER             
+        sh '''  helm upgrade first-release --install python-helm-chart --set image.tag=$BUILD_NUMBER             
                 kubectl get nodes
                 kubectl get pods -A
                 kubectl get ns

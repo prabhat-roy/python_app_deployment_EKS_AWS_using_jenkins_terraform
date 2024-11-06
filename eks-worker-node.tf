@@ -10,7 +10,7 @@ resource "aws_eks_node_group" "node_group" {
   capacity_type        = var.capacity
   force_update_version = true
   scaling_config {
-    desired_size = 2
+    desired_size = 1
     max_size     = 5
     min_size     = 1
   }

@@ -4,6 +4,7 @@ pipeline {
     environment {
          GITHUB_URL = "https://github.com/prabhat-roy/java_maven_app_deployment_EKS_AWS_using_jenkins_terraform.git"
          BRANCH = "main"
+         SCANNER_HOME =tool "SonarQube"
          IMAGE_NAME = "python-sample-image"         
          ACC_ID = "873330726955"
          REGION = "us-east-1"
@@ -17,7 +18,13 @@ pipeline {
                 }
             }
         }
-      
+        stage("Clean Workspace") {
+            steps {
+                script {
+                    gv_script.clean()
+                }
+            }
+        }
         stage("Checkout from Git Repo") {
             steps {
                 script {
