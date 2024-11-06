@@ -102,7 +102,13 @@ pipeline {
                 }
             }
         }
-        
+        stage("Remove docker images") {
+            steps {
+                script {
+                    gv_script.removedocker()
+                }
+            }
+        } 
     }
     post {
         always {
