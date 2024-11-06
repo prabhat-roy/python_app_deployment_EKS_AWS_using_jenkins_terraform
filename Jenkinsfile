@@ -2,7 +2,7 @@ def gv_script
 pipeline {
     agent any
     environment {
-         GITHUB_URL = "https://github.com/prabhat-roy/java_maven_app_deployment_EKS_AWS_using_jenkins_terraform.git"
+         GITHUB_URL = "https://github.com/prabhat-roy/python_app_deployment_EKS_AWS_using_jenkins_terraform.git"
          BRANCH = "main"
          SCANNER_HOME =tool "SonarQube"
          IMAGE_NAME = "python-sample-image"         
