@@ -5,13 +5,8 @@ def checkout() {
         git branch: "${BRANCH}", credentialsId: 'github', url: "$GITHUB_URL"
 }
 def owasp() {
-		dependencyCheck additionalArguments: ''' 
-			-o "./" 
-			-s "./"
-			-f "ALL" 
-			--prettyPrint''',
-			odcInstallation: 'DP-Check'
-			 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+    dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 }
 def sonaranalysis() {
         withSonarQubeEnv('SonarQube') {
