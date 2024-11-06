@@ -53,13 +53,6 @@ pipeline {
                 }
             }
         }
-        stage("Build") {
-            steps {
-                script {
-                    gv_script.build()
-                }
-            }
-        }
         stage("Docker Image") {
             steps {
                 script {
